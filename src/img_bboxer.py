@@ -8,7 +8,7 @@ class ImageBboxer:
 
     def get_right_extended_bbox(self, left_bbox: list, extend_value = 0):
         lt, rt, rb, lb = left_bbox
-        new_lt = [int(lt[0]), int(lt[1]) - extend_value]
+        new_lt = [int(rt[0]), int(rt[1]) - extend_value]
         new_rt = [self.__img_width, int(rt[1])]
         new_rb = [self.__img_width, int(rb[1])]
         new_lb = [int(rb[0]), int(rb[1]) + extend_value]

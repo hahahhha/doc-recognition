@@ -24,10 +24,10 @@ class DocumentParser:
         self.__document_objects = DocumentParser.convert_parse_objects_to_doc_objects(parse_data_objects, self.__img_bboxer)
 
         # читаем текст
-        # reader = easyocr.Reader(['ru', 'en'])
-        # self.__ocr_results = reader.readtext(self.__img)
+        reader = easyocr.Reader(['ru', 'en'])
+        self.__ocr_results = reader.readtext(self.__img)
         # на время теста для более быстрой отладки!!!
-        self.__ocr_results = get_ocr_results()
+        # self.__ocr_results = get_ocr_results()
 
 
     def __search_titles_bboxes(self) -> None:
@@ -50,4 +50,3 @@ class DocumentParser:
                     json_data[doc_obj.json_title].append(text)
         with open(output_file_name, 'w+', encoding='utf-8') as outfile:
             json.dump(json_data, outfile, ensure_ascii=False, indent=4)
-        return self.__document_objects

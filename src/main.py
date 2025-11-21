@@ -21,14 +21,8 @@ parse_objects = [
 def main():
     img = cv2.imread('tests/images/upd1_page1.jpg', cv2.IMREAD_GRAYSCALE)
     dp = DocumentParser(img, parse_objects)
-    doc_objects = dp.parse_scan_to_json('output.json')
+    dp.parse_scan_to_json('output.json')
     print('done')
-    for do in doc_objects:
-        # img = cv2.rectangle(img, do.value_bbox[0], do.value_bbox[2], (255, 0, 0), 2)
-        print(do.value_bbox, do.value)
-    # cv2.imshow('image', img)
-    # cv2.waitKey(0)
-
 
 if __name__ == '__main__':
     main()

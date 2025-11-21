@@ -50,7 +50,8 @@ class DocumentObject:
         self.__value_bbox = right_extended_bbox.copy()
         self.__is_value_bbox_inserted = True
 
-    def insert_value(self, value: str) -> None:
-        if not self.__is_value_bbox_inserted:
-            raise Exception("нельзя вставлять значения в document object с не найденным value bbox")
-        self.__value = value
+    # не используется
+    # def insert_value(self, value: str) -> None:
+    #     if not self.__is_value_bbox_inserted:
+    #         raise Exception("нельзя вставлять значения в document object с не найденным value bbox")
+    #     self.__value = value
