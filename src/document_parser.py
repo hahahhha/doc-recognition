@@ -7,6 +7,7 @@ from document_object import DocumentObject
 from parse_data import ParseDataObject
 from img_bboxer import ImageBboxer
 
+from get_temp_ocr_results import get_ocr_results
 
 class DocumentParser:
     @staticmethod
@@ -23,8 +24,10 @@ class DocumentParser:
         self.__document_objects = DocumentParser.convert_parse_objects_to_doc_objects(parse_data_objects, self.__img_bboxer)
 
         # читаем текст
-        reader = easyocr.Reader(['ru', 'en'])
-        self.__ocr_results = reader.readtext(self.__img)
+        # reader = easyocr.Reader(['ru', 'en'])
+        # self.__ocr_results = reader.readtext(self.__img)
+        # на время теста для более быстрой отладки!!!
+        self.__ocr_results = get_ocr_results()
 
 
     def __search_titles_bboxes(self) -> None:
@@ -34,7 +37,7 @@ class DocumentParser:
                     doc_obj.insert_title_bbox_with_auto_value_bbox(bbox)
 
 
-    def parse_scan_to_json(self, output_file_name: str) -> None:
+    def parse_scan_to_json(self, output_file_name: str):
         self.__search_titles_bboxes()
         json_data = dict(zip([do.json_title for do in self.__document_objects],
                              [[] for _ in range(len(self.__document_objects))]))
@@ -47,4 +50,4 @@ class DocumentParser:
                     json_data[doc_obj.json_title].append(text)
         with open(output_file_name, 'w+', encoding='utf-8') as outfile:
             json.dump(json_data, outfile, ensure_ascii=False, indent=4)
-        return
+        return self.__document_objects

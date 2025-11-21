@@ -2,7 +2,7 @@ import re
 from img_bboxer import ImageBboxer
 
 class DocumentObject:
-    __extend_value = 5
+    __extend_value = 15
     def __init__(self, title, json_title, title_search_patter, image_bboxer: ImageBboxer):
         self.__title = title
         self.__json_title = json_title
@@ -41,13 +41,13 @@ class DocumentObject:
 
     def check_title_match(self, to_check_line: str) -> bool:
         # тут можно будет позже сделать, чтобы сразу возвращалась еще и часть, "переполняющая" название
-        match = re.search(self.__title_search_patter, to_check_line)
+        match = re.search(self.__title_search_patter, to_check_line, flags=re.IGNORECASE)
         return match is not None
 
     def insert_title_bbox_with_auto_value_bbox(self, title_bbox) -> None:
         self.__title_bbox = title_bbox
         right_extended_bbox = self.__image_bboxer.get_right_extended_bbox(title_bbox, extend_value=self.__extend_value)
-        self.__value_bbox = right_extended_bbox
+        self.__value_bbox = right_extended_bbox.copy()
         self.__is_value_bbox_inserted = True
 
     def insert_value(self, value: str) -> None:
