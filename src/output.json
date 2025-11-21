@@ -1,0 +1,36 @@
+{
+    "seller": [
+        "not found"
+    ],
+    "address": [
+        "Грузополучатель и его адрес:",
+        "ООО \"Торговый дом \"Комплексный\" , 121170, Москва",
+        "Кутузовский пр-кт, дом Ng 1/7",
+        "строение 2",
+        "Грузополучатель и его адрес:",
+        "ООО \"Торговый дом \"Комплексный\" , 121170, Москва",
+        "Кутузовский пр-кт, дом Ng 1/7",
+        "строение 2"
+    ],
+    "seller inn/kpp": [
+        "not found"
+    ],
+    "gruz address": [
+        "not found"
+    ],
+    "poluchat address": [
+        "not found"
+    ],
+    "platezh raschet": [
+        "not found"
+    ],
+    "buyer": [
+        "not found"
+    ],
+    "buyer inn/kpp": [
+        "not found"
+    ],
+    "currency": [
+        "not found"
+    ]
+}
