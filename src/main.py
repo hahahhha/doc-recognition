@@ -1,8 +1,5 @@
 import cv2
-import easyocr
-
-from document_parser import DocumentParser
-from parse_data import ParseDataObject
+from udp_parsers import ParseDataObject, DocumentHeaderParser
 
 parse_objects = [
     ParseDataObject("продавец", "продавец", "seller"),
@@ -20,8 +17,8 @@ parse_objects = [
 
 def main():
     img = cv2.imread('tests/images/upd1_page1.jpg', cv2.IMREAD_GRAYSCALE)
-    dp = DocumentParser(img, parse_objects)
-    dp.parse_scan_to_json('output.json')
+    dp = DocumentHeaderParser(img, parse_objects)
+    dp.parse_header_scan_to_json('output.json')
     print('done')
 
 if __name__ == '__main__':

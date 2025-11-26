@@ -9,7 +9,8 @@ from img_bboxer import ImageBboxer
 
 from get_temp_ocr_results import get_ocr_results
 
-class DocumentParser:
+
+class DocumentHeaderParser:
     @staticmethod
     def convert_parse_objects_to_doc_objects(parse_objects: list[ParseDataObject], img_bboxer: ImageBboxer) -> list[DocumentObject]:
         document_objects = []
@@ -21,13 +22,13 @@ class DocumentParser:
     def __init__(self, scan_img: np.ndarray, parse_data_objects: list[ParseDataObject]):
         self.__img = scan_img.copy()
         self.__img_bboxer = ImageBboxer(scan_img)
-        self.__document_objects = DocumentParser.convert_parse_objects_to_doc_objects(parse_data_objects, self.__img_bboxer)
+        self.__document_objects = DocumentHeaderParser.convert_parse_objects_to_doc_objects(parse_data_objects, self.__img_bboxer)
 
         # читаем текст
         reader = easyocr.Reader(['ru', 'en'])
-        self.__ocr_results = reader.readtext(self.__img)
+        # self.__ocr_results = reader.readtext(self.__img)
         # на время теста для более быстрой отладки!!!
-        # self.__ocr_results = get_ocr_results()
+        self.__ocr_results = get_ocr_results()
 
 
     def __search_titles_bboxes(self) -> None:
@@ -37,7 +38,7 @@ class DocumentParser:
                     doc_obj.insert_title_bbox_with_auto_value_bbox(bbox)
 
 
-    def parse_scan_to_json(self, output_file_name: str):
+    def parse_header_scan_to_json(self, output_file_name: str):
         self.__search_titles_bboxes()
         json_data = dict(zip([do.json_title for do in self.__document_objects],
                              [[] for _ in range(len(self.__document_objects))]))

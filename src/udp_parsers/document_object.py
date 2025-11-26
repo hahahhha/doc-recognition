@@ -13,7 +13,6 @@ class DocumentObject:
         self.__value_bbox = None
 
         self.__image_bboxer = image_bboxer
-        self.__value = None
 
     @property
     def title(self):
@@ -35,9 +34,6 @@ class DocumentObject:
     def value_bbox(self):
         return self.__value_bbox
 
-    @property
-    def value(self):
-        return self.__value
 
     def check_title_match(self, to_check_line: str) -> bool:
         # тут можно будет позже сделать, чтобы сразу возвращалась еще и часть, "переполняющая" название
