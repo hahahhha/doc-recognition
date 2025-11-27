@@ -64,9 +64,8 @@ if __name__ == '__main__':
         text = d['text']
         p1, p2 = d['coordinates']
         canvas = cv2.rectangle(canvas, p1, p2, (rnd.randint(100, 255), rnd.randint(100, 255), rnd.randint(100, 255)), 2)
-
+        canvas = cv2.putText(canvas, 'data', p2, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255))
         cnt += 1
-    cv2.imshow('image', canvas)
-    cv2.waitKey(0)
+    cv2.imwrite('res.jpg', canvas)
     print(cnt)
     print(len(table))
