@@ -1,14 +1,13 @@
 import easyocr
 import cv2
 import numpy as np
-import json
 
 from document_object import DocumentObject
-from parse_data import ParseDataObject
+from parse_data_object import ParseDataObject
 from img_bboxer import ImageBboxer
 
 from get_temp_ocr_results import get_ocr_results
-
+from ocr_result_object import OcrResultObject
 
 class DocumentHeaderParser:
     @staticmethod
@@ -38,16 +37,18 @@ class DocumentHeaderParser:
                     doc_obj.insert_title_bbox_with_auto_value_bbox(bbox)
 
 
-    def parse_header_scan_to_json(self, output_file_name: str):
+    def parse_header_scan_to_dict(self) -> dict[str, list[OcrResultObject]]:
         self.__search_titles_bboxes()
-        json_data = dict(zip([do.json_title for do in self.__document_objects],
-                             [[] for _ in range(len(self.__document_objects))]))
+        scanned_data = dict(zip([do.json_title for do in self.__document_objects],
+                                [[] for _ in range(len(self.__document_objects))]))
         for doc_obj in self.__document_objects:
-            if not doc_obj.is_value_bbox_inserted:
-                json_data[doc_obj.json_title] = ['not found']
+            if not doc_obj.is_value_bbox_found:
+                scanned_data[doc_obj.json_title] = ['not found']
                 continue
             for bbox, text, confidence in self.__ocr_results:
                 if ImageBboxer.is_totally_inside(doc_obj.value_bbox, bbox):
-                    json_data[doc_obj.json_title].append(text)
-        with open(output_file_name, 'w+', encoding='utf-8') as outfile:
-            json.dump(json_data, outfile, ensure_ascii=False, indent=4)
+                    p1, p2, p3, p4 = [[int(p[0]), int(p[1])] for p in bbox]
+                    scanned_data[doc_obj.json_title].append(
+                        OcrResultObject(p1[0], p1[1], p3[0], p3[1], text)
+                    )
+        return scanned_data

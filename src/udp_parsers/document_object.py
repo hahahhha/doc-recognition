@@ -23,7 +23,7 @@ class DocumentObject:
         return self.__json_title
 
     @property
-    def is_value_bbox_inserted(self):
+    def is_value_bbox_found(self):
         return self.__is_value_bbox_inserted
 
     @property
